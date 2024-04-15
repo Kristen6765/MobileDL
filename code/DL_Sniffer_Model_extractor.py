@@ -37,8 +37,9 @@ def iterate_rodata(pkg_list, detector, dl_lib, suffix_list,sec_path,magicStr):
         pkg_path = sec_path
         if not os.path.exists(pkg_path):
             continue
-        for lib in os.listdir(pkg_path):
-            if detector(os.path.join(pkg_path, lib),magicStr):
+        tt=os.path.join(pkg_path, "lib")
+        for lib in os.listdir(tt):
+            if detector(os.path.join(tt, lib),magicStr):
                 ret[pkg] = lib+"                 "+ pkg_path
                 break
     DL_PKGS[dl_lib] = ret
@@ -67,8 +68,9 @@ def find_model_via_suffix(pkg_list, suffix_list, dl_lib):
     DL_MODELS[dl_lib] = ret 
     
 def straight_detector_rodata(lib_path,magic_str):
-    with open(lib_path,encoding="utf8",errors='ignore') as f:
         
+    #print(lib_path)
+    with open(lib_path,encoding="utf8",errors='ignore') as f:
         lines= f.read()
         for stra in magic_str:
             if stra in lines:
@@ -104,10 +106,13 @@ def extract_models_all_type():
     config.SECTION_DATA_PATH=ROOT_PATH+"section_data/apks_4/"
     config.DECOMPOSED_APK_PATH = ROOT_PATH+"decomposed_apks/apks_4/"
     catorys = os.listdir(config.DECOMPOSED_APK_PATH)
+    #print(catorys)
     for cat in catorys:
+        # print(cat)
         config.DECOMPOSED_APK_PATH=ROOT_PATH+"decomposed_apks/apks_4/"+cat+"/"
         config.SECTION_DATA_PATH=ROOT_PATH+"section_data/apks_4/" +cat
-
+        #iprint(config.SECTION_DATA_PATH)
+        #print(os.path.exists(config.SECTION_DATA_PATH))
         if not os.path.exists(config.SECTION_DATA_PATH):
             continue
         extract_models(cat)
