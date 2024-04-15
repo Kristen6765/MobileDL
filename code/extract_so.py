@@ -90,6 +90,7 @@ def extract_one(app_path,out_pkg_dir,sec):
 		extract_section_from_lib(lib, out_path, sec)
 
 def main():
+	print(len(sys.argv))
 	if len(sys.argv)==3:
 		extract_section_from_lib_of_all_type()
 	elif len(sys.argv)==2:
